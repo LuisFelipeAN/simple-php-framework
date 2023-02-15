@@ -1,0 +1,17 @@
+{
+    "name": "luisfelipe/simple-php-framework",
+    "description": "A simple MVC php framework",
+    "type": "project",
+    "autoload": {
+        "psr-4": {
+            "App\\": "App/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Luis Felipe de Almeida Nascimento",
+            "email": "luis.nascimento@nativadesenvolvimento.com.br"
+        }
+    ],
+    "require": {}
+}

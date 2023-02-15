@@ -1,0 +1,30 @@
+version: '3'
+services:
+  apache:
+    build: 
+      context: .
+      dockerfile: dockerfile
+    image: 'php:8.2-apache'
+    container_name: php-apache
+    restart: always
+    ports:
+      - '80:80'
+    volumes:
+      - ./:/var/www/html
+    depends_on:
+      - mysqldb
+    links:
+      - mysqldb
+
+  mysqldb:
+    container_name: mysql
+    image: mysql:latest
+    restart: always
+    ports:
+      - '3306:3306'
+    environment:
+      - MYSQL_DATABASE=test2
+      - MYSQL_ROOT_USER=admin
+      - MYSQL_ROOT_PASSWORD=admin
+      - MYSQL_USER=admin
+      - MYSQL_PASSWORD=admin
