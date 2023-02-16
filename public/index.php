@@ -1,9 +1,6 @@
 <?php
-require '../vendor/autoload.php';
-require '../App/Functions/functions.php';
+require_once '../vendor/autoload.php';
+require_once '../app/Functions/functions.php';
+require_once '../config/config.php';
 
-use App\Controllers\TesteController;
-
-$controller = new TesteController();
 (new \App\Core\RouterCore());
-dd($controller->seta());
