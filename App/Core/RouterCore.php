@@ -1,12 +1,13 @@
 <?php
 namespace App\Core;
+
+use App\Facades\Request;
+use App\Facades\Route;
 class RouterCore{
     private $uri;
     private $method;
-    private $getArr = [];
     public function __construct(){
         $this->initialize();
-        require_once __DIR__.'/../../routes/router.php';
         $this->execute();
     }
 
@@ -17,38 +18,14 @@ class RouterCore{
         $this->uri = implode('/',$this->normalizeURI($params));
     }
 
-    private function get($router, $call){
-        $this->getArr[] = [
-            'router' => $router,
-            'call' => $call,
-        ];
-    }
-
     private function execute(){
-        switch($this->method){
-            case 'GET':
-                $this->executeGet();
-                break;
-            case 'POST':
-
-                break;
-        }
-    }
-
-    private function executeGet(){
-        foreach($this->getArr as $get){
-            $router = substr($get['router'], 1);
-            if(substr($router,-1) == '/'){
-                $router = substr($router,0,-1);
-            }
-            if($router == $this->uri){
-                if(is_callable($get['call'])){
-                    $get['call']();
-                    break;
-                }
+        foreach(Route::getRoutes() as $route){
+            if($route->getMethod() == $this->method && $route->getUri() == $this->uri){
+                return $route->execute(new Request());
             }
         }
     }
+
     private function normalizeURI($arr){
         return array_values(array_filter($arr));
     }
